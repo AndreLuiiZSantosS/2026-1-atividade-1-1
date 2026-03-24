@@ -1,0 +1,14 @@
+# Utilizacao o Fedora como imagem base
+FROM fedora:latest
+# Definir o diretório de trabalho dentro do contêiner
+WORKDIR /app
+# atualizar o sistema e instalar as dependências necessárias para o projeto Python
+RUN dnf update -y && \
+    dnf install -y fish python3 python3-pip python3-devel gcc sqlite && \
+    dnf clean all
+# Instalar django
+RUN pip3 install Django==4.2.7
+#expor a porta 8000 para acessar o servidor de desenvolvimento do Django
+EXPOSE 8000
+# Padronizacao do shell
+CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
